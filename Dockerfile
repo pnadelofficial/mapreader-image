@@ -96,9 +96,9 @@ RUN python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA a
 # ---------------------------------------------------------------------------
 RUN pip install ninja==1.11.1
 
-RUN git clone https://github.com/maps-as-data/detectron2.git /opt/detectron2 \
+RUN git clone https://github.com/facebookresearch/detectron2.git /opt/detectron2 \
     && cd /opt/detectron2 \
-    && FORCE_CUDA=0 pip install -e .
+    && pip install -e .
  
 # ---------------------------------------------------------------------------
 # 4. MapTextPipeline (maps-as-data fork for CPU compatibility)
