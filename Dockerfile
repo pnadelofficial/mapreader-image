@@ -43,12 +43,6 @@ ENV CUDA_HOME=/usr/local/cuda-11.7
 ENV PATH=${CUDA_HOME}/bin:${PATH}
 ENV LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
  
-# Force CUDA compilation in detectron2 / MapTextPipeline
-ENV FORCE_CUDA=1
-# Set a broad arch list - trim this to just your GPU arch to speed up builds
-# V100=7.0, A100=8.0, RTX3090/A6000=8.6, H100=9.0
-ENV TORCH_CUDA_ARCH_LIST="7.0;8.0;8.6;8.9;9.0"
- 
 WORKDIR /workspace
  
 # ---------------------------------------------------------------------------
@@ -100,9 +94,11 @@ RUN python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA a
 # 3. detectron2 - build from source with CUDA 11.7
 #    No --no-build-isolation needed here because torch is already installed
 # ---------------------------------------------------------------------------
-RUN git clone https://github.com/facebookresearch/detectron2.git /opt/detectron2 \
+RUN pip install ninja==1.11.1
+
+RUN git clone https://github.com/maps-as-data/detectron2.git /opt/detectron2 \
     && cd /opt/detectron2 \
-    && pip install -e .
+    && FORCE_CUDA=0 pip install -e .
  
 # ---------------------------------------------------------------------------
 # 4. MapTextPipeline (maps-as-data fork for CPU compatibility)
