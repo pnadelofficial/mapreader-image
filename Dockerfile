@@ -47,7 +47,7 @@ ENV LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 ENV FORCE_CUDA=1
 # Set a broad arch list - trim this to just your GPU arch to speed up builds
 # V100=7.0, A100=8.0, RTX3090/A6000=8.6, H100=9.0
-ENV TORCH_CUDA_ARCH_LIST="7.0;8.0;8.6"
+ENV TORCH_CUDA_ARCH_LIST="7.0;8.0;8.6;8.9;9.0"
  
 WORKDIR /workspace
  
@@ -140,12 +140,7 @@ RUN pip install \
 VOLUME ["/workspace/maps", "/workspace/patches", "/workspace/models"]
  
 # ---------------------------------------------------------------------------
-# 8. Copy in an example notebook (optional - comment out if not needed)
-# ---------------------------------------------------------------------------
-COPY --chown=root:root notebooks/ /workspace/notebooks/ 2>/dev/null || true
- 
-# ---------------------------------------------------------------------------
-# 9. Entrypoint - starts Jupyter by default, easy to override
+# 8. Entrypoint - starts Jupyter by default, easy to override
 # ---------------------------------------------------------------------------
 EXPOSE 8888
  
