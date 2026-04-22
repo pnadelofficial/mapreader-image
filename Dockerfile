@@ -122,7 +122,8 @@ RUN git clone https://github.com/maps-as-data/MapTextPipeline.git /opt/MapTextPi
         "scikit-learn>=1.0,<1.4" \
         "numba>=0.56,<0.58" \
         "matplotlib>=3.5,<3.8" \
-    && python setup.py build develop
+    && python setup.py build_ext \
+    && pip install --no-build-isolation -e .
  
 # Set the ADET_PATH environment variable that MapReader uses to locate the pipeline
 ENV ADET_PATH=/opt/MapTextPipeline
