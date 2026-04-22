@@ -49,10 +49,10 @@ WORKDIR /workspace
 # 1. System dependencies
 # ---------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.8 \
-    python3.8-dev \
+    python3.9 \
+    python3.9-dev \
     python3-pip \
-    python3.8-venv \
+    python3.9-venv \
     git \
     wget \
     curl \
@@ -72,9 +72,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
  
-# Make python3.8 the default python
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1 \
-    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 \
+# Make python3.9 the default python
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 \
     && python -m pip install --upgrade pip setuptools wheel
  
 # ---------------------------------------------------------------------------
