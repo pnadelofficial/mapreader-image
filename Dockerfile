@@ -32,7 +32,7 @@
 #   singularity pull docker://youruser/mapreader-maptext:latest
 # =============================================================================
  
-FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04
  
 # Avoid interactive prompts during apt installs
 ENV DEBIAN_FRONTEND=noninteractive
@@ -51,8 +51,8 @@ WORKDIR /workspace
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.9 \
     python3.9-dev \
-    python3-pip \
     python3.9-venv \
+    python3-pip \
     git \
     wget \
     curl \
@@ -65,14 +65,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender-dev \
     libgomp1 \
-    # GDAL for geospatial support (needed by geopandas/mapreader geo features)
     gdal-bin \
     libgdal-dev \
-    python3-gdal \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
- 
-# Make python3.9 the default python
+
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 \
     && python -m pip install --upgrade pip setuptools wheel
@@ -80,6 +77,9 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
 # ---------------------------------------------------------------------------
 # 2. PyTorch - pinned to 2.0.1+cu117 to match MapTextPipeline spec exactly
 # ---------------------------------------------------------------------------
+RUN pip uninstall numpy -y || true \
+    && apt-get remove -y python3-numpy || true
+    
 RUN pip install \
     torch==2.0.1+cu117 \
     torchvision==0.15.2+cu117 \
