@@ -96,9 +96,15 @@ RUN python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA a
 # ---------------------------------------------------------------------------
 RUN pip install ninja==1.11.1
 
+RUN pip install \
+    "setuptools>=65" \
+    "wheel" \
+    "Cython" \
+    "pycocotools"
+
 RUN git clone https://github.com/facebookresearch/detectron2.git /opt/detectron2 \
     && cd /opt/detectron2 \
-    && pip install -e .
+    && pip install --no-build-isolation -e .
  
 # ---------------------------------------------------------------------------
 # 4. MapTextPipeline (maps-as-data fork for CPU compatibility)
