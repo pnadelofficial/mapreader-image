@@ -49,9 +49,9 @@ WORKDIR /workspace
 # 1. System dependencies
 # ---------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.9 \
-    python3.9-dev \
-    python3.9-venv \
+    python3.10 \
+    python3.10-dev \
+    python3.10-venv \
     python3-pip \
     git \
     wget \
@@ -70,8 +70,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
-    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 \
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 \
     && python -m pip install --upgrade pip setuptools wheel
  
 # ---------------------------------------------------------------------------
@@ -79,7 +79,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
 # ---------------------------------------------------------------------------
 RUN pip uninstall numpy -y || true \
     && apt-get remove -y python3-numpy || true
-    
+
 RUN pip install \
     torch==2.0.1+cu117 \
     torchvision==0.15.2+cu117 \
