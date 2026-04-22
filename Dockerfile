@@ -113,9 +113,15 @@ RUN pip install "numpy>=1.23,<2.0"
 
 RUN git clone https://github.com/maps-as-data/MapTextPipeline.git /opt/MapTextPipeline \
     && cd /opt/MapTextPipeline \
-    && grep -v "scikit-image" requirements.txt > requirements_fixed.txt \
+    && grep -vE "setuptools|numpy|scipy|scikit-image|scikit-learn|numba|matplotlib" requirements.txt > requirements_fixed.txt \
     && pip install -r requirements_fixed.txt \
-    && pip install "scikit-image>=0.19,<0.22" \
+    && pip install \
+        "numpy>=1.23,<2.0" \
+        "scipy>=1.7,<2.0" \
+        "scikit-image>=0.19,<0.22" \
+        "scikit-learn>=1.0,<1.4" \
+        "numba>=0.56,<0.58" \
+        "matplotlib>=3.5,<3.8" \
     && python setup.py build develop
  
 # Set the ADET_PATH environment variable that MapReader uses to locate the pipeline
