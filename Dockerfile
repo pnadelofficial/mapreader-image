@@ -118,8 +118,8 @@ ENV ADET_PATH=/opt/MapTextPipeline
 # ---------------------------------------------------------------------------
 # 5. MapReader with text spotting extras
 # ---------------------------------------------------------------------------
-RUN pip install --no-deps "mapreader[text]>=1.4.0" \
-    && pip install "mapreader>=1.4.0"
+RUN pip install --no-deps "mapreader[text] @ git+https://github.com/maps-as-data/MapReader.git" \
+    && pip install "mapreader @ git+https://github.com/maps-as-data/MapReader.git"
  
 # ---------------------------------------------------------------------------
 # 6. Jupyter + common scientific stack for interactive use
