@@ -103,9 +103,13 @@ RUN git clone https://github.com/facebookresearch/detectron2.git /opt/detectron2
 # ---------------------------------------------------------------------------
 # 4. MapTextPipeline (maps-as-data fork for CPU compatibility)
 # ---------------------------------------------------------------------------
+RUN pip install "numpy>=1.23,<2.0"
+
 RUN git clone https://github.com/maps-as-data/MapTextPipeline.git /opt/MapTextPipeline \
     && cd /opt/MapTextPipeline \
-    && pip install -r requirements.txt \
+    && grep -v "scikit-image" requirements.txt > requirements_fixed.txt \
+    && pip install -r requirements_fixed.txt \
+    && pip install "scikit-image>=0.19,<0.22" \
     && python setup.py build develop
  
 # Set the ADET_PATH environment variable that MapReader uses to locate the pipeline
